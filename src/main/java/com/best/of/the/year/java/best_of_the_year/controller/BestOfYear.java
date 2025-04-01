@@ -10,14 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/")
-public class Controllers {
+public class BestOfYear {
 
     // Best of nome in index
-    @GetMapping("/")
+    @GetMapping("/ciao")
     public String controllerMain(Model model) {
         // Il mio nome
         model.addAttribute("name", "Simona");
-        return "index";
+        System.out.println("ciao");
+        return "ciao";
+
     }
 
     private List<Movie> getBestMovies() {
