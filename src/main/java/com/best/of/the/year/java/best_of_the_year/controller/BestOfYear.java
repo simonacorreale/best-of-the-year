@@ -10,52 +10,73 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /* 
 
--> Exercizio ripreso il 5 aprile per motivi personali
+-> Exercizio ripreso il 5 aprile per motivi personali   
 Esercitazione di oggi: Spring MVC - Best of the year
 Nome repo: best-of-the-year
-Le modalità di consegna sono le solite, con repo github da associare alla cartella di progetto java.
-Cosa fare?
+
 Step 1
-Creare un nuovo progetto Spring Boot MVC + Thymeleaf (vedi tutorial sulle slide).
-Il nome del progetto è best-of-the-year (stesso nome del repo).
-Nel progetto aggiungere un controller che risponde alla root dell’applicazione, con un metodo che restituisce una view fatta con Thymeleaf in cui viene stampato un titolo: “Best of the year by …” (al posto dei puntini deve apparire il vostro nome, passato come attributo dal controller attraverso il Model).
+Creare un nuovo progetto Spring Boot MVC + Thymeleaf (vedi tutorial sulle slide).✅
+Il nome del progetto è best-of-the-year (stesso nome del repo).✅
+Nel progetto aggiungere un controller che risponde alla root dell’applicazione, con un metodo che 
+restituisce una view fatta con Thymeleaf in cui viene stampato un titolo: 
+“Best of the year by …” (al posto dei puntini deve apparire il vostro nome, passato come attributo dal 
+controller attraverso il Model).✅
+_______________
+
 Step 2
-Creare all’interno del controller due metodi privati :
-- uno restituisce una lista di oggetti di tipo Movie - getBestMovies()
-- l’altro restituisce una lista di  oggetti di tipo Song - getBestSongs()
+Creare all’interno del controller due metodi privati:
+- uno restituisce una lista di oggetti di tipo Movie - getBestMovies()✅
+- l’altro restituisce una lista di  oggetti di tipo Song - getBestSongs()✅
 Creare le classi Movie e Song aventi almeno :
-- un id
-- un titolo
+- un id✅
+- un titolo✅
+_______________
+
 Aggiungere al controller altri due metodi, che rispondono agli url
-- “/movies”
-- “/songs”
-In ognuno di questi metodi aggiungere al Model un attributo stringa con una lista di titoli di migliori film o canzoni (in base al metodo che stiamo implementando) separati da virgole.
+- “/movies”✅
+- “/songs”✅
+_______________
+
+In ognuno di questi metodi aggiungere al Model un attributo stringa con una lista di titoli di migliori film o canzoni 
+(in base al metodo che stiamo implementando) separati da virgole.
 Utilizzare i due metodi getBest… per recuperare i film e le canzoni.
 Creare i rispettivi template Thymeleaf.
+
 Creare due metodi
 - “/movies/{id}”
 - “/songs/{id}”
 che dato il parametro id passato tramite il path, mostri in pagina il titolo relativo al film / canzone.
 Testare chiamando dal browser i diversi url.
-Buon lavoro! (edited)  */
+Buon lavoro! (edited)  
+
+________________
+
+*/
+
 @Controller
 @RequestMapping("/")
 public class BestOfYear {
 
+    // Step 1 ✅
     // Best of nome in index
+
     @GetMapping("/index")
     public String controllerMain(Model model) {
         // Il mio nome
-        model.addAttribute("name", "Simona Correale");
+        model.addAttribute("name", "Simona Correale 👩🏻");
         System.out.println("ciao");
         return "index";
-
     }
 
+    // -----------------
+    // Step 2 ✅
+    // Metodo per la lista delel canzoni ✅
+
+    // Metodo per la lista delel Film ✅
     private List<Movie> getBestMovies() {
         List<Movie> film = new ArrayList<>();
 
-        // Lista di film
+        // Lista di film ✅
         film.add(new Movie(232, "Film 1"));
         film.add(new Movie(222, "Film 2"));
         film.add(new Movie(242, "Film 3"));
@@ -64,10 +85,11 @@ public class BestOfYear {
         return film;
     }
 
+    // Metodo per la lista delel Songs ✅
     private List<Songs> getBestSongs() {
         List<Songs> canzoni = new ArrayList<>();
 
-        // Lista di canzoni
+        // Lista di canzoni ✅
         canzoni.add(new Songs(232, "Song 1"));
         canzoni.add(new Songs(222, "Song 2"));
         canzoni.add(new Songs(242, "Song 3"));
@@ -76,39 +98,59 @@ public class BestOfYear {
         return canzoni;
     }
 
-    // URL "/movie"
-    @GetMapping("/movie")
-    public String bestMovies(Model model) {
+    // -----------------
+    // URL pagina dei canzoni e il rispettivo metodo per mostrare la lista ✅
 
-        List<Movie> movie = getBestMovies();
-        model.addAttribute("movie", movie);
-        return "movie";
-    }
-
-    // URL "/songs"
-    @GetMapping("/songs")
+    @GetMapping("/song")
     public String bestSongs(Model model) {
         List<Songs> song = getBestSongs();
         model.addAttribute("songs", song);
 
-        return "songs";
-    }
-    /*
-     * // URL "/movies/{id}"
-     * 
-     * @GetMapping("path")
-     * public String getMethodName(@RequestParam String param) {
-     * return new String();
-     * }
-     */
+        String songs = "";
 
-    /*
-     * // URL "/songs/{id}"
-     * 
-     * @GetMapping("path")
-     * public String getMethodName(@RequestParam String param) {
-     * return new String();
-     * }
-     */
+        for (Songs song1 : song) {
+
+            songs += song1.getTitolo() + "";
+
+            // substring(Object target, int start) <--Documentazione spring
+            // copia una parte dell'indice di inizio della destinazione alla fine della
+            // destinazione.
+
+            songs = songs.substring(0, songs.length() - 2);
+
+        }
+
+        model.addAttribute("stringSong", songs);
+        return "song";
+    }
+
+    // --------
+
+    // URL pagina dei film e il rispettivo metodo per mostrare la lista ✅
+
+    @GetMapping("/movie")
+    public String bestMovies(Model model) {
+        List<Movie> film = getBestMovies();
+
+        String movies = "";
+
+        for (Movie movie : film) {
+
+            movies += movie.getTitolo() + ", ";
+
+            // substring(Object target, int start) <--Documentazione spring
+            // copia una parte dell'indice di inizio della destinazione alla fine della
+            // destinazione.
+
+            movies = movies.substring(0, movies.length() - 2);
+
+        }
+
+        model.addAttribute("stringMovie", movies);
+        return "movie";
+
+    }
+
+    // --------
 
 }
