@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /* 
 
@@ -42,7 +43,7 @@ In ognuno di questi metodi aggiungere al Model un attributo stringa con una list
 Utilizzare i due metodi getBest… per recuperare i film e le canzoni.
 Creare i rispettivi template Thymeleaf.
 
-Creare due metodi
+Creare due metodi - Non completo☄️
 - “/movies/{id}”
 - “/songs/{id}”
 che dato il parametro id passato tramite il path, mostri in pagina il titolo relativo al film / canzone.
@@ -149,6 +150,25 @@ public class BestOfYear {
         model.addAttribute("stringMovie", movies);
         return "movie";
 
+    }
+
+    // Creare due metodi - Non completo☄️
+
+    // movies/{id}”
+    // “/songs/{id}”
+
+    // _____________________________________
+
+    @GetMapping("/movies/{id}")
+    public String getMethodName(@RequestParam String param) {
+
+        return new String();
+    }
+
+    @GetMapping("/songs/{id}")
+    public String getMethodName(@RequestParam String param) {
+
+        return new String();
     }
 
     // --------
