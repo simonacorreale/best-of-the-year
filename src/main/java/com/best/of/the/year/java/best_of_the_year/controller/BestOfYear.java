@@ -162,14 +162,24 @@ public class BestOfYear {
     @GetMapping("/movies/{id}")
     public String getMethodName(@RequestParam String param) {
 
+        List<Movie> film = getBestMovies();
+
+        for (Movie movie : film) {
+
+        }
+
         return new String();
     }
 
-    @GetMapping("/songs/{id}")
-    public String getMethodName(@RequestParam String param) {
-
-        return new String();
-    }
+    /*
+     * @GetMapping("/songs/{id}")
+     * public String getMethodName(@RequestParam String param) {
+     * 
+     * 
+     * 
+     * return new String();
+     * }
+     */
 
     // --------
 
