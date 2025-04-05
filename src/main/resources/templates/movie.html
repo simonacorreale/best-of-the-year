@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/style.css}" rel="stylesheet">
     <title>Movie</title>
 </head>
 
@@ -12,7 +13,11 @@
     <h1> Film depresse decisamente da asoltare dopo una rottura</h1>
     <ul>
         <li th:each="movie : ${movieList}">
-            <p>Numero Film: <span th:text="${movie.id}">id</span></p>
+            <p>Numero Film: <span th:text="${movie.id}">id</span>
+
+                <a th:href="@{/movie/idfilm}" th:text="${item.nome}">Nome elemento</a>
+
+            </p>
             <hr />
         </li>
     </ul>
