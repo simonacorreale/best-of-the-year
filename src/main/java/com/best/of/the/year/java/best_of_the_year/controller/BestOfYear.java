@@ -112,7 +112,7 @@ public class BestOfYear {
 
             songs += song1.getTitolo() + "";
 
-            // substring(Object target, int start) <--Documentazione spring
+            // substring(Object target, int start) <--Documentazione w3c
             // copia una parte dell'indice di inizio della destinazione alla fine della
             // destinazione.
 
@@ -138,7 +138,7 @@ public class BestOfYear {
 
             movies += movie.getTitolo() + ", ";
 
-            // substring(Object target, int start) <--Documentazione spring
+            // substring(Object target, int start) <--Documentazione w3c
             // copia una parte dell'indice di inizio della destinazione alla fine della
             // destinazione.
 
