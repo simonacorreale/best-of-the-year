@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /* 
 
@@ -44,8 +44,10 @@ Utilizzare i due metodi getBest… per recuperare i film e le canzoni.
 Creare i rispettivi template Thymeleaf.
 
 Creare due metodi - Non completo☄️
+
 - “/movies/{id}”
 - “/songs/{id}”
+
 che dato il parametro id passato tramite il path, mostri in pagina il titolo relativo al film / canzone.
 Testare chiamando dal browser i diversi url.
 Buon lavoro! (edited)  
@@ -78,10 +80,10 @@ public class BestOfYear {
         List<Movie> film = new ArrayList<>();
 
         // Lista di film ✅
-        film.add(new Movie(232, "Film 1"));
-        film.add(new Movie(222, "Film 2"));
-        film.add(new Movie(242, "Film 3"));
-        film.add(new Movie(252, "Film 4"));
+        film.add(new Movie(1, "Film 1"));
+        film.add(new Movie(2, "Film 2"));
+        film.add(new Movie(3, "Film 3"));
+        film.add(new Movie(4, "Film 4"));
 
         return film;
     }
@@ -91,10 +93,10 @@ public class BestOfYear {
         List<Songs> canzoni = new ArrayList<>();
 
         // Lista di canzoni ✅
-        canzoni.add(new Songs(232, "Song 1"));
-        canzoni.add(new Songs(222, "Song 2"));
-        canzoni.add(new Songs(242, "Song 3"));
-        canzoni.add(new Songs(252, "Song 4"));
+        canzoni.add(new Songs(1, "Song 1"));
+        canzoni.add(new Songs(2, "Song 2"));
+        canzoni.add(new Songs(3, "Song 3"));
+        canzoni.add(new Songs(4, "Song 4"));
 
         return canzoni;
     }
@@ -104,83 +106,93 @@ public class BestOfYear {
 
     @GetMapping("/song")
     public String bestSongs(Model model) {
-        List<Songs> song = getBestSongs();
-        model.addAttribute("songs", song);
+        List<Songs> canzoni = getBestSongs();
+        // cambiare il nome da singolare al pulrale
+        String canzoneTitolo = "";
 
-        String songs = "";
+        for (Songs canzone : canzoni) {
 
-        for (Songs song1 : song) {
-
-            songs += song1.getTitolo() + "";
+            canzoneTitolo += canzone.getTitolo() + ", ";
 
             // substring(Object target, int start) <--Documentazione w3c
             // copia una parte dell'indice di inizio della destinazione alla fine della
             // destinazione.
 
-            songs = songs.substring(0, songs.length() - 2);
+            canzoneTitolo = canzoneTitolo.substring(0, canzoneTitolo.length() - 2);
+            System.out.println(canzoneTitolo);
 
         }
 
-        model.addAttribute("stringSong", songs);
+        model.addAttribute("stringSong", canzoneTitolo);
         return "song";
     }
 
-    // --------
+    // -----------------
 
     // URL pagina dei film e il rispettivo metodo per mostrare la lista ✅
 
     @GetMapping("/movie")
     public String bestMovies(Model model) {
-        List<Movie> film = getBestMovies();
+        List<Movie> films = getBestMovies();
 
-        String movies = "";
+        String filmsTitle = "";
 
-        for (Movie movie : film) {
-
-            movies += movie.getTitolo() + ", ";
+        for (Movie film : films) {
+            // bho non mi funziona non so
+            filmsTitle += film.getTitolo() + ", ";
 
             // substring(Object target, int start) <--Documentazione w3c
             // copia una parte dell'indice di inizio della destinazione alla fine della
             // destinazione.
 
-            movies = movies.substring(0, movies.length() - 2);
+            filmsTitle = filmsTitle.substring(0, filmsTitle.length() - 2);
 
         }
 
-        model.addAttribute("stringMovie", movies);
+        model.addAttribute("stringMovie", filmsTitle);
         return "movie";
 
     }
 
-    // Creare due metodi - Non completo☄️
+    // Creare due metodi - Non completo non funziona ☄️
 
     // movies/{id}”
     // “/songs/{id}”
 
     // _____________________________________
 
-    @GetMapping("/movies/{id}")
-    public String getMethodName(@RequestParam String param) {
+    @GetMapping("/movie/{id}")
+    public String idfilm(@PathVariable int id, Model model) {
 
-        List<Movie> film = getBestMovies();
+        List<Movie> films = getBestMovies();
 
-        for (Movie movie : film) {
+        for (Movie movie : films) {
+            if (movie.getId() == id) {
+                model.addAttribute("searchFilm", movie); // Assegno il film trovato al modello
+
+            }
 
         }
 
-        return new String();
+        return "idfilm"; // Il nome del template Thymeleaf per visualizzare i dettagli del film
     }
 
-    /*
-     * @GetMapping("/songs/{id}")
-     * public String getMethodName(@RequestParam String param) {
-     * 
-     * 
-     * 
-     * return new String();
-     * }
-     */
+    @GetMapping("/song/{id}")
+    public String idSongs(@PathVariable int id, Model model) {
 
-    // --------
+        List<Songs> songs = getBestSongs();
+
+        for (Songs song : songs) {
+
+            if (song.getId() == id) {
+                model.addAttribute("searchSong", song);// Assegno il film trovato al modello
+            }
+
+        }
+
+        return "idsong"; // Il nome del template Thymeleaf che visualizzerà i dettagli del film
+    }
+
+    // _____________________________________
 
 }
