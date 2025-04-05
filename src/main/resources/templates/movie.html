@@ -8,8 +8,13 @@
 </head>
 
 <body>
-    <h1>Movie page</h1>
-    <h2 th:text="${stringMovie}"></h2>
+    <h1> Film depresse decisamente da asoltare dopo una rottura</h1>
+    <ul>
+        <li th:each="movie : ${movieList}">
+            <p>Numero Film: <span th:text="${movie.id}">id</span></p>
+            <hr />
+        </li>
+    </ul>
 
 </body>
 

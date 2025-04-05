@@ -43,7 +43,7 @@ In ognuno di questi metodi aggiungere al Model un attributo stringa con una list
 Utilizzare i due metodi getBest… per recuperare i film e le canzoni.
 Creare i rispettivi template Thymeleaf.
 
-Creare due metodi - Non completo☄️
+Creare due metodi - Non completo✅
 
 - “/movies/{id}”
 - “/songs/{id}”
@@ -54,6 +54,25 @@ Buon lavoro! (edited)
 
 ________________
 
+
+Seconda parte esercizio:
+
+Continuiamo a lavorare sul nostro progetto Best of the year (stessa repo).
+Includere Bootstrap e fare il refactoring del layout come da allegato, cercando di creare componenti riutilizzabili con i fragments.
+
+Modificare i metodi che rispondono agli url
+- “/movies”
+- “/songs”
+in modo che i Model restituiscano una lista di oggetti (Movie o Song) invece di una stringa.
+
+Modificare anche le rispettive view.
+
+Ogni elemento mostrato nella lista (film o canzone) deve essere un link che punta alla rispettiva pagina di dettaglio (e anche in questo caso restituire il Model al posto della stringa col titolo).
+Nella pagina home (quella che risponde alla root dell’applicazione) aggiungere due link che portano agli url /movies e /songs.
+Nelle pagine con le liste aggiungere un link che riporta alla home page.
+Testare navigando l’applicazione.
+Buon lavoro!
+ 
 */
 
 @Controller
@@ -79,7 +98,7 @@ public class BestOfYear {
     private List<Movie> getBestMovies() {
         List<Movie> film = new ArrayList<>();
 
-        // Lista di film ✅
+        // Lista di film ✅ //modo di visualizzare lista 1 esempio (per me)
         film.add(new Movie(1, "Film 1"));
         film.add(new Movie(2, "Film 2"));
         film.add(new Movie(3, "Film 3"));
@@ -92,69 +111,48 @@ public class BestOfYear {
     private List<Songs> getBestSongs() {
         List<Songs> canzoni = new ArrayList<>();
 
-        // Lista di canzoni ✅
-        canzoni.add(new Songs(1, "Song 1"));
-        canzoni.add(new Songs(2, "Song 2"));
-        canzoni.add(new Songs(3, "Song 3"));
-        canzoni.add(new Songs(4, "Song 4"));
+        Songs canzone1 = new Songs(1, "Alba chiara", "Biaggio Felicino", "2020");
+        Songs canzone2 = new Songs(2, "Alba media", "Biaggio Medino", "2021");
+        Songs canzone3 = new Songs(3, "Alba nera", "Biaggio Depressino", "2022");
+        Songs canzone4 = new Songs(4, "Alba blue", "Biaggio Tristino", "2023");
+
+        // Lista di canzoni ✅ //modo di visualizzare lista 1 esempio (per me)
+        canzoni.add(canzone1);
+        canzoni.add(canzone2);
+        canzoni.add(canzone3);
+        canzoni.add(canzone4);
 
         return canzoni;
     }
 
     // -----------------
     // URL pagina dei canzoni e il rispettivo metodo per mostrare la lista ✅
+    // Metodo modificato per l'esercizio 2
 
     @GetMapping("/song")
     public String bestSongs(Model model) {
         List<Songs> canzoni = getBestSongs();
-        // cambiare il nome da singolare al pulrale
-        String canzoneTitolo = "";
 
-        for (Songs canzone : canzoni) {
+        model.addAttribute("songsList", canzoni);
 
-            canzoneTitolo += canzone.getTitolo() + ", ";
-
-            // substring(Object target, int start) <--Documentazione w3c
-            // copia una parte dell'indice di inizio della destinazione alla fine della
-            // destinazione.
-
-            canzoneTitolo = canzoneTitolo.substring(0, canzoneTitolo.length() - 2);
-            System.out.println(canzoneTitolo);
-
-        }
-
-        model.addAttribute("stringSong", canzoneTitolo);
         return "song";
     }
 
     // -----------------
 
     // URL pagina dei film e il rispettivo metodo per mostrare la lista ✅
+    // metodo modificato per l'esercizio 2
 
     @GetMapping("/movie")
     public String bestMovies(Model model) {
         List<Movie> films = getBestMovies();
 
-        String filmsTitle = "";
-
-        for (Movie film : films) {
-            // bho non mi funziona non so
-            filmsTitle += film.getTitolo() + ", ";
-
-            // substring(Object target, int start) <--Documentazione w3c
-            // copia una parte dell'indice di inizio della destinazione alla fine della
-            // destinazione.
-
-            filmsTitle = filmsTitle.substring(0, filmsTitle.length() - 2);
-
-        }
-
-        model.addAttribute("stringMovie", filmsTitle);
+        model.addAttribute("movieList", films);
         return "movie";
 
     }
 
-    // Creare due metodi - Non completo non funziona ☄️
+    // Creare due metodi ✅
 
     // movies/{id}”
     // “/songs/{id}”
@@ -194,5 +192,14 @@ public class BestOfYear {
     }
 
     // _____________________________________
+
+    @GetMapping("/home")
+    public String homePageController(Model model) {
+
+        model.addAttribute("nome pagina", "homepage");
+
+        return "home";
+
+    }
 
 }

@@ -8,9 +8,13 @@
 </head>
 
 <body>
-    <h1>Song page</h1>
-    <h2 th:text="${stringSong}"></h2>
-
+    <h1> Canzoni depresse decisamente da asoltare dopo una rottura</h1>
+    <ul>
+        <li th:each="song : ${songsList}">
+            <p>Numero canzone: <span th:text="${song.id}">id</span></p>
+            <hr />
+        </li>
+    </ul>
 </body>
 
 </html>
