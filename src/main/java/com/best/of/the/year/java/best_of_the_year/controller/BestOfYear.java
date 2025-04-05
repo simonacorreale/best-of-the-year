@@ -196,7 +196,7 @@ public class BestOfYear {
     @GetMapping("/home")
     public String homePageController(Model model) {
 
-        model.addAttribute("nome pagina", "homepage");
+        model.addAttribute("name", "homepage");
 
         return "home";
 
